@@ -1,0 +1,29 @@
+services:
+  elephant_rest_gateway.responsehandler:
+    class: Drupal\elephant_rest_gateway\Http\ElephantResponseHandler
+
+  elephant_rest_gateway.requesthandler:
+    class: Drupal\elephant_rest_gateway\Http\ElephantRequestHandler
+    arguments: ['@elephant_rest_gateway.responsehandler']
+
+  elephant_rest_gateway.userservicehandler:
+    class: Drupal\elephant_user\Manager\UserServiceHandler
+
+  elephant_rest_gateway.loginservice:
+    class: Drupal\elephant_user\Service\LoginService
+    arguments: ['@elephant_rest_gateway.responsehandler']
+
+  elephant_rest_gateway.registerservice:
+    class: Drupal\elephant_user\Service\RegisterService
+    arguments: ['@elephant_rest_gateway.responsehandler']
+
+  elephant_rest_gateway.itemmanager:
+    class: Drupal\elephant_items\Manager\ItemManager
+
+  elephant_rest_gateway.appintention:
+    class: Drupal\elephant_items\Service\AppIntention
+    arguments: ['@elephant_rest_gateway.itemmanager', '@elephant_rest_gateway.responsehandler']
+
+  elephant_rest_gateway.userintention:
+      class: Drupal\elephant_items\Service\UserIntention
+      arguments: ['@elephant_rest_gateway.itemmanager', '@elephant_rest_gateway.responsehandler']

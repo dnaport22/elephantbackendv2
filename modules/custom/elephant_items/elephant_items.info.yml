@@ -1,0 +1,9 @@
+name: Elephant Items
+type: module
+description: "This module handles item posts coming from elephant app."
+dependencies:
+  - rest
+  - node
+version: '0.1'
+core: '8.x'
+project: 'elephant app'

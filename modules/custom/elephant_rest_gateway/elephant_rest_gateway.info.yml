@@ -1,0 +1,8 @@
+name: Elephant REST Gateway
+type: module
+description: "This module acts as a authentication gateway for elephant app services."
+dependencies:
+  - rest
+version: '0.1'
+core: '8.x'
+project: 'elephant app'
