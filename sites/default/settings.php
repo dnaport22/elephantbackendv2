@@ -713,12 +713,12 @@ if (file_exists(__DIR__ . '/settings.local.php')) {
   include __DIR__ . '/settings.local.php';
 }
 $databases['default']['default'] = array (
-  'database' => 'elephant_v2',
-  'username' => 'root',
+  'database' => 'u482157177_elv2',
+  'username' => 'u482157177_elv2',
   'password' => 'admin',
   'prefix' => 'main_',
-  'host' => 'localhost',
-  'port' => '3306',
+  'host' => '',
+  'port' => '',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
 );
