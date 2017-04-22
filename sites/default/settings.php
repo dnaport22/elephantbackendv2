@@ -715,7 +715,7 @@ if (file_exists(__DIR__ . '/settings.local.php')) {
 $databases['default']['default'] = array (
   'database' => 'u482157177_elv2',
   'username' => 'u482157177_elv2',
-  'password' => 'admin',
+  'password' => 'SusApp',
   'prefix' => 'main_',
   'host' => '',
   'port' => '',
