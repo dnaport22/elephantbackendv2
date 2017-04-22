@@ -1,2 +1,4 @@
 .DS_Store
 .idea
+sites/*/settings*.php
+sites/*/services*.yml
