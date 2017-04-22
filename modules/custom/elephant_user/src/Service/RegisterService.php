@@ -30,7 +30,7 @@ class RegisterService {
           RegisterService::htmlEscape($data['pass'])
         );
         $user->save();
-        _user_mail_notify('register_pending_approval', $user);
+        _user_mail_notify('register_no_approval_required', $user);
         // TODO: Send verification email after saving details (try on cloud server).
         return $this->responder->onRegisterSuccessResponse();
       }
