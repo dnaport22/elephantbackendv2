@@ -1,0 +1,14 @@
+<?php
+
+use Drupal\elephant_user\Service\ActivateAccount;
+
+
+/**
+ * Implement hook_mail_alter.
+ */
+function elephant_user_mail_alter(&$message, &$to) {
+  $activate= new ActivateAccount();
+  if ($message['id'] == 'register_no_approval_required') {
+    $message['body'][] = "-- Hook Sample" . $to;
+  }
+}

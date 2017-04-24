@@ -7,9 +7,11 @@ use Drupal\user\Entity\User;
 
 class RegisterService {
   private $responder;
+  private $activateAccount;
 
-  public function __construct(ElephantResponseHandler $responseHandler) {
+  public function __construct(ElephantResponseHandler $responseHandler, ActivateAccount $activateAccount) {
     $this->responder = $responseHandler;
+    $this->activateAccount = $activateAccount;
   }
 
   /**
@@ -30,15 +32,22 @@ class RegisterService {
           RegisterService::htmlEscape($data['pass'])
         );
         $user->save();
-        _user_mail_notify('register_no_approval_required', $user);
-        // TODO: Send verification email after saving details (try on cloud server).
-        return $this->responder->onRegisterSuccessResponse();
-      }
 
+        if ($this->setVerificationCode($data['email'])) {
+          _user_mail_notify('register_no_approval_required', $user);
+          return $this->responder->onRegisterSuccessResponse();
+        }
+
+      }
       return $this->responder->onNameExistResponse();
     }
 
     return $this->responder->onEmailExistResponse();
+  }
+
+  private function setVerificationCode($email) {
+    $this->activateAccount->loadUser($email);
+    return $this->activateAccount->storeUserVerification();
   }
 
   private static function htmlEscape($input) {
