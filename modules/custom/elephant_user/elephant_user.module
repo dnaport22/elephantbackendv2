@@ -6,6 +6,6 @@ use Drupal\elephant_user\Service\ActivateAccount;
 /**
  * Implement hook_mail.
  */
-//function elephant_user_mail(&$message, &$to) {
-//  $message['body'][] = 'This is just a test' . var_dump($message);
-//}
+function elephant_user_mail(&$message, &$to) {
+  $message['body'][] = 'This is just a test' . var_dump($message);
+}
