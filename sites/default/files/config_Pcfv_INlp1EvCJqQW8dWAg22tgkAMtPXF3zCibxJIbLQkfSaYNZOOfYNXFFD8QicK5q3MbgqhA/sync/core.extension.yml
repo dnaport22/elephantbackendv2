@@ -15,6 +15,7 @@ module:
   editor: 0
   elephant_items: 0
   elephant_rest_gateway: 0
+  elephant_user: 0
   field: 0
   field_ui: 0
   file: 0
