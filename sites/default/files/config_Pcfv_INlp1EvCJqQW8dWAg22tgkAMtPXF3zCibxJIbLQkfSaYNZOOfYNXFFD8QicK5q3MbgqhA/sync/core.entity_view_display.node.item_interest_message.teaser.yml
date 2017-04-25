@@ -1,0 +1,26 @@
+uuid: e763e8d2-74b2-48c0-a400-d0a832dd08c7
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.item_interest_message.body
+    - node.type.item_interest_message
+  module:
+    - text
+    - user
+id: node.item_interest_message.teaser
+targetEntityType: node
+bundle: item_interest_message
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+  links:
+    weight: 100
+hidden: {  }

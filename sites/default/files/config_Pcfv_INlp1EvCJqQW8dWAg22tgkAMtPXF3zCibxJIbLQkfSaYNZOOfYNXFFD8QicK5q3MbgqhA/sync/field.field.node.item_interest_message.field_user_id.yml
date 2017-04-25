@@ -1,0 +1,23 @@
+uuid: 8ea842b2-12cd-4302-b654-84b52447c092
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_user_id
+    - node.type.item_interest_message
+id: node.item_interest_message.field_user_id
+field_name: field_user_id
+entity_type: node
+bundle: item_interest_message
+label: 'User ID'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

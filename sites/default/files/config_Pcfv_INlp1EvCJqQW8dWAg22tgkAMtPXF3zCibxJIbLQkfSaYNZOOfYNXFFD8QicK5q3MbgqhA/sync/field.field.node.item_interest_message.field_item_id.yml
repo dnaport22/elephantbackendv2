@@ -1,0 +1,23 @@
+uuid: c25e3ee3-eb1e-4dc1-8b00-0e473512068e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_item_id
+    - node.type.item_interest_message
+id: node.item_interest_message.field_item_id
+field_name: field_item_id
+entity_type: node
+bundle: item_interest_message
+label: 'Item ID'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

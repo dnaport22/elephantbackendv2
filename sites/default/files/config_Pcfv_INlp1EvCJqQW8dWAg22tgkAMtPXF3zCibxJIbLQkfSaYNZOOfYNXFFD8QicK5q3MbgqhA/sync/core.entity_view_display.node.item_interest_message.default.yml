@@ -1,0 +1,42 @@
+uuid: 595e2b8f-9ceb-4baa-ab00-b86b8cdb9b68
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.item_interest_message.body
+    - field.field.node.item_interest_message.field_item_id
+    - field.field.node.item_interest_message.field_user_id
+    - node.type.item_interest_message
+  module:
+    - text
+    - user
+id: node.item_interest_message.default
+targetEntityType: node
+bundle: item_interest_message
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+  field_item_id:
+    weight: 102
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+  field_user_id:
+    weight: 103
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+  links:
+    weight: 100
+hidden: {  }

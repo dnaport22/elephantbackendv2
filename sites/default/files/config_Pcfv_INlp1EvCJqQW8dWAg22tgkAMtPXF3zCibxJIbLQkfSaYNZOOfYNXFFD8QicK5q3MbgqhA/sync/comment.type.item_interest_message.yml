@@ -1,0 +1,8 @@
+uuid: 5874821c-e178-4d77-9608-8d43bb492a77
+langcode: en
+status: true
+dependencies: {  }
+id: item_interest_message
+label: 'Item Interest Message'
+target_entity_type_id: node
+description: 'Elephant app user message to the item owner.'

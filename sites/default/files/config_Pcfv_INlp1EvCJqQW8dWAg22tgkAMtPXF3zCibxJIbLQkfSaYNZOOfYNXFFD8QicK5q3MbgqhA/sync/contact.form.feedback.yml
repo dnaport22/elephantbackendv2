@@ -1,0 +1,10 @@
+uuid: 0c8ef4eb-c0b8-49df-a900-c97e11d597e1
+langcode: en
+status: true
+dependencies: {  }
+id: feedback
+label: 'Website feedback'
+recipients:
+  - nav8699@gmail.com
+reply: ''
+weight: 0
