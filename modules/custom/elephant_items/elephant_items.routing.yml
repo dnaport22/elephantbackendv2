@@ -1,7 +1,0 @@
-elephant_items.post:
-  path: 'elephantitem/postitem'
-  defaults:
-    _controller: '\Drupal\elephant_items\Http\Test::testPost'
-  methods: [POST]
-  requirements:
-    _access: 'TRUE'
