@@ -4,9 +4,8 @@ use Drupal\elephant_user\Service\ActivateAccount;
 
 
 /**
- * Implement hook_mail_alter.
+ * Implement hook_mail.
  */
-function elephant_user_mail_alter(&$message, &$to) {
-  $activate= new ActivateAccount();
+function elephant_user_mail(&$message, &$to) {
   $message['body'][] = 'This is just a test' . var_dump($message);
 }
