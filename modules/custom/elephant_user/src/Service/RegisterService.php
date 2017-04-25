@@ -32,11 +32,10 @@ class RegisterService {
           RegisterService::htmlEscape($data['pass'])
         );
         $user->save();
+        $this->setVerificationCode($data['email']);
+        _user_mail_notify('register_no_approval_required', $user);
 
-        if ($this->setVerificationCode($data['email'])) {
-          _user_mail_notify('register_no_approval_required', $user);
-          return $this->responder->onRegisterSuccessResponse();
-        }
+        return $this->responder->onRegisterSuccessResponse();
 
       }
       return $this->responder->onNameExistResponse();
