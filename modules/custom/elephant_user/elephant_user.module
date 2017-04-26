@@ -35,7 +35,7 @@ $bubbleableMetadata) {
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'user_verification':
-          $replacements[$original] = $data['anything'];
+          $replacements[$original] = VERIFICATION_URL;
           break;
       }
     }
