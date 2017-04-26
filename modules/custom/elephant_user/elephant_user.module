@@ -23,9 +23,11 @@ function elephant_user_tokens($type, $tokens, array $data = array(), array $opti
   $simple = $data['customanything'];
   if ($type == 'elephant_user') {
     foreach ($tokens as $name => $original) {
-      if ($name == 'elephant_user_verification') {
-        $new = $simple;
-        $replacements[$original] = PlainTextOutput::renderFromHtml($new);
+      switch ($name) {
+        case 'elephant_user_verification':
+          $new = $simple;
+          $replacements[$original] = $new;
+          break;
       }
     }
   }
@@ -38,7 +40,7 @@ function getAccountVerificationUrl() {
   $data = array([
     "customanything" => "Fooooo Baaaar",
   ]);
-  $token_service->replace('Tokens: [elephant_user:elephant_user_verification]', $data, $options);
+  $token_service->replace('Tokens: [elephant_user:elephant_user_verification]', $data);
 
 }
 
