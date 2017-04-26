@@ -1,16 +1,16 @@
 <?php
 
 use Drupal\elephant_user\Service\ActivateAccount;
+use Drupal\Core\Render\BubbleableMetadata;
+
+define("VERIFICATION_URL", "http://myelephant.xyz/activation/");
 
 /**
  * Implements hook_token_info().
  */
 function elephant_user_token_info() {
   $info = array();
-
-  // Add any new tokens.
   $info['tokens']['elephant_user']['elephant_user_verification'] = t('Telling drupal that you define custom token');
-  // Return them.
   return $info;
 }
 
@@ -19,14 +19,26 @@ function elephant_user_token_info() {
  */
 function elephant_user_tokens($type, $tokens, array $data = array(), array $options = array()) {
   $replacements = array();
-  $token_service = \Drupal::token();
 
   if ($type == 'elephant_user') {
     foreach ($tokens as $name => $original) {
       if ($name == 'elephant_user_verification') {
-        $replacements[$original] = 'This is Foo Bar';
+        $replacements[$original] = VERIFICATION_URL;
       }
     }
   }
   return $replacements;
+}
+
+function getAccountVerificationUrl() {
+  $bubbleable_metadeta = new BubbleableMetadata();
+  $token_service = \Drupal::token();
+  $options = ['callback' => 'elephant_mail_tokens'];
+  $token_service->replace('[elephant_user:elephant_user_verification]');
+
+}
+
+function elephant_mail_tokens($replacement, $data, $options) {
+  $replacement['elephant_user_verification'] = "This is now replaced";
+
 }
