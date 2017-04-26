@@ -2,14 +2,31 @@
 
 use Drupal\elephant_user\Service\ActivateAccount;
 
+/**
+ * Implements hook_token_info().
+ */
+function elephant_user_token_info() {
+  $info = array();
+
+  // Add any new tokens.
+  $info['tokens']['elephant_user']['elephant_user_verification'] = t('Telling drupal that you define custom token');
+  // Return them.
+  return $info;
+}
 
 /**
- * Implement hook_tokens_values.
+ * Implements hook_tokens().
  */
-function elephant_user_tokens_values($type, $object = NULL, $options = array()) {
-  if ($type == 'user') {
-    $user = $object;
-    $tokens['foo'] = $user->foo;
-    return $tokens;
+function elephant_user_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+  $token_service = \Drupal::token();
+
+  if ($type == 'elephant_user') {
+    foreach ($tokens as $name => $original) {
+      if ($name = 'elephant_user_verification') {
+        $replacements[$original] = 'This is Foo Bar';
+      }
+    }
   }
+  return $replacements;
 }
