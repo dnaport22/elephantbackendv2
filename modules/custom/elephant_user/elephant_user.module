@@ -26,8 +26,7 @@ $bubbleableMetadata) {
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'elephant_user_verification':
-          $new = $simple;
-          $replacements[$original] = $new;
+          $replacements[$original] = $simple;
           break;
       }
     }
