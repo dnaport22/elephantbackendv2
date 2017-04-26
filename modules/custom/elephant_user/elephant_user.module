@@ -18,7 +18,7 @@ function elephant_user_token_info() {
 /**
  * Implements hook_tokens().
  */
-function elephant_user_tokens($type, $tokens, array $data = array(), array $options = array()) {
+function elephant_user_tokens($type, $tokens, array $data, array $options = array()) {
   $replacements = array();
   $simple = $data['customanything'];
   if ($type == 'elephant_user') {
