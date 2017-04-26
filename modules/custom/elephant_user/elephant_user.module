@@ -4,18 +4,12 @@ use Drupal\elephant_user\Service\ActivateAccount;
 
 
 /**
- * Implement hook_tokens_alter.
+ * Implement hook_tokens_values.
  */
-function elephant_user_tokens_alter(array &$replacements, array $context, \Drupal\Core\Render\BubbleableMetadata
-$bubbleable_metadata) {
-  if ($context['type'] == 'user' && !empty($context['data']['user'])) {
-    $node = $context['data']['user'];
-
-    // Alter the [node:title] token, and replace it with the rendered content
-    // of a field (field_title).
-    if (isset($context['tokens']['one-time-login-url'])) {
-      $title = 'Fooooooo Baaaaar';
-      $replacements[$context['tokens']['title']] = $title;
-    }
+function elephant_user_tokens_values($type, $object = NULL, $options = array()) {
+  if ($type == 'user') {
+    $user = $object;
+    $tokens['foo'] = $user->foo;
+    return $tokens;
   }
 }
