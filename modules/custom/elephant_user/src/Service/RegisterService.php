@@ -34,7 +34,7 @@ class RegisterService {
         $user->save();
         $this->setVerificationCode($data['email']);
         getAccountVerificationUrl();
-        _user_mail_notify('register_no_approval_required', $user);
+        //_user_mail_notify('register_no_approval_required', $user);
 
         return $this->responder->onRegisterSuccessResponse();
 

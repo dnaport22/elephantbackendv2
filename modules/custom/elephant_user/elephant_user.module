@@ -21,12 +21,11 @@ function elephant_user_token_info() {
 function elephant_user_tokens($type, $tokens, array $data, array $options = array(), BubbleableMetadata
 $bubbleableMetadata) {
   $replacements = array();
-  $simple = $data['customanything'];
   if ($type == 'elephant_user') {
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'elephant_user_verification':
-          $replacements[$original] = $simple;
+          $replacements[$original] = $data['customanything'];
           break;
       }
     }
