@@ -34,7 +34,10 @@ function getAccountVerificationUrl() {
   $bubbleable_metadeta = new BubbleableMetadata();
   $token_service = \Drupal::token();
   $options = ['callback' => 'elephant_mail_tokens'];
-  $token_service->replace('[elephant_user:elephant_user_verification]');
+  $data = array([
+    "elephant_user_verification" => "Fooooo Baaaar",
+  ]);
+  $token_service->replace('Tokens: [elephant_user:elephant_user_verification]', $data);
 
 }
 
