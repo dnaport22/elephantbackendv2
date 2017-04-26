@@ -20,12 +20,12 @@ function elephant_user_token_info() {
  */
 function elephant_user_tokens($type, $tokens, array $data = array(), array $options = array()) {
   $replacements = array();
-  $simple = ['customanything'];
+  $simple = $data['customanything'];
   if ($type == 'elephant_user') {
     foreach ($tokens as $name => $original) {
       if ($name == 'elephant_user_verification') {
         $new = $simple;
-        $replacements[$original] = PlainTextOutput::renderFromHtml($new[0]);
+        $replacements[$original] = PlainTextOutput::renderFromHtml($new);
       }
     }
   }
