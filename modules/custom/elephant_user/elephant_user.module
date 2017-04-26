@@ -35,11 +35,10 @@ function elephant_user_tokens($type, $tokens, array $data = array(), array $opti
 function getAccountVerificationUrl() {
   $token_service = \Drupal::token();
   $options = ['callback' => 'elephant_mail_tokens'];
-  $data = array([
-    "elephant_user" => array(
-      'user_verification' => "Fooooo Baaar",
-    ),
-  ]);
+  $data = array(
+    'elephant_user' => array(
+      'user_verification' => 'Fooooo Baaar',
+    ));
   $token_service->replace('Tokens: [elephant_user:elephant_user_verification]', $data);
 
 }
