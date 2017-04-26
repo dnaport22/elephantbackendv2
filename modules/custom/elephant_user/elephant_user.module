@@ -19,11 +19,12 @@ function elephant_user_token_info() {
  */
 function elephant_user_tokens($type, $tokens, array $data = array(), array $options = array()) {
   $replacements = array();
-
+  $simple = ['customanything'];
   if ($type == 'elephant_user') {
     foreach ($tokens as $name => $original) {
       if ($name == 'elephant_user_verification') {
-        $replacements[$original] = VERIFICATION_URL;
+        $new = $simple;
+        $replacements[$original] = $new;
       }
     }
   }
@@ -31,11 +32,10 @@ function elephant_user_tokens($type, $tokens, array $data = array(), array $opti
 }
 
 function getAccountVerificationUrl() {
-  $bubbleable_metadeta = new BubbleableMetadata();
   $token_service = \Drupal::token();
   $options = ['callback' => 'elephant_mail_tokens'];
   $data = array([
-    "elephant_user" => "Fooooo Baaaar",
+    "customanything" => "Fooooo Baaaar",
   ]);
   $token_service->replace('Tokens: [elephant_user:elephant_user_verification]', $data, $options);
 
