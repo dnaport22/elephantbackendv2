@@ -4,8 +4,18 @@ use Drupal\elephant_user\Service\ActivateAccount;
 
 
 /**
- * Implement hook_mail.
+ * Implement hook_tokens_alter.
  */
-function user_mail(&$message, &$to) {
-  $message['body'][] = 'This is just a test' . var_dump($message);
+function elephant_user_tokens_alter(array &$replacements, array $context, \Drupal\Core\Render\BubbleableMetadata
+$bubbleable_metadata) {
+  if ($context['type'] == 'user' && !empty($context['data']['user'])) {
+    $node = $context['data']['user'];
+
+    // Alter the [node:title] token, and replace it with the rendered content
+    // of a field (field_title).
+    if (isset($context['tokens']['one-time-login-url'])) {
+      $title = 'Fooooooo Baaaaar';
+      $replacements[$context['tokens']['title']] = $title;
+    }
+  }
 }
