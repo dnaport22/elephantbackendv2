@@ -37,7 +37,7 @@ function getAccountVerificationUrl() {
   $data = array([
     "elephant_user_verification" => "Fooooo Baaaar",
   ]);
-  $token_service->replace('Tokens: [elephant_user:elephant_user_verification]', $data);
+  $token_service->replace('Tokens: [elephant_user:elephant_user_verification]', $data, $options);
 
 }
 
