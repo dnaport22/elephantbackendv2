@@ -10,19 +10,9 @@ define("VERIFICATION_URL", "http://myelephant.xyz/activation/");
  * Implements hook_token_info().
  */
 function elephant_user_token_info() {
-  $type = array(
-    'name' => t('Elephant User'),
-    'needs-data' => 'elephant_user',
-  );
-
-  $elephant_user['user_verification'] = array(
-    'name' => t('User Verififcation Link'),
-  );
-
-  return array(
-    'types' => array('elephant_user' => $type),
-    'tokens' => array('elephant_user' => $elephant_user),
-  );
+  $info = array();
+  $info['tokens']['elephant_user']['elephant_user_verification'] = t('Telling drupal that you define custom token');
+  return $info;
 }
 
 /**
@@ -31,11 +21,13 @@ function elephant_user_token_info() {
 function elephant_user_tokens($type, $tokens, array $data, array $options = array(), BubbleableMetadata
 $bubbleableMetadata) {
   $replacements = array();
+  $simple = $data['customanything'];
   if ($type == 'elephant_user') {
     foreach ($tokens as $name => $original) {
       switch ($name) {
-        case 'user_verification':
-          $replacements[$original] = VERIFICATION_URL;
+        case 'elephant_user_verification':
+          $new = $simple;
+          $replacements[$original] = $new;
           break;
       }
     }
@@ -46,7 +38,7 @@ $bubbleableMetadata) {
 function getAccountVerificationUrl() {
   $token_service = \Drupal::token();
   $options = ['callback' => 'elephant_mail_tokens'];
-  $data = array('anything' => 'THIS IS JUST A TEST');
+  $data = array('customanything' => 'THIS IS JUST A TEST');
   $token_service->replace('[elephant_user:elephant_user_verification]', $data);
 
 }
