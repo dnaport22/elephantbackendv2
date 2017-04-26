@@ -25,7 +25,7 @@ function elephant_user_tokens($type, $tokens, array $data = array(), array $opti
     foreach ($tokens as $name => $original) {
       if ($name == 'elephant_user_verification') {
         $new = $simple;
-        $replacements[$original] = PlainTextOutput::renderFromHtml($new);
+        $replacements[$original] = PlainTextOutput::renderFromHtml($new[0]);
       }
     }
   }
