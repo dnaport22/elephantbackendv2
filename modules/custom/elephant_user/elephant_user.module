@@ -7,6 +7,15 @@ use Drupal\Component\Render\PlainTextOutput;
 define("VERIFICATION_URL", "http://myelephant.xyz/activation/");
 
 /**
+ * Implements hook_mail_alter().
+ */
+function elephant_user_mail_alter(&$message) {
+  if ($message['id'] == '\'register_no_approval_required\'') {
+    $message['body'][] = "- Test for message alteration";
+  }
+}
+
+/**
  * Implements hook_token_info().
  */
 function elephant_user_token_info() {
