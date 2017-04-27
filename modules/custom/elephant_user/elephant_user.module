@@ -18,27 +18,29 @@ function elephant_user_token_info() {
 /**
  * Implements hook_tokens().
  */
-function elephant_user_tokens($type, $tokens, array $data, array $options = array(), BubbleableMetadata
-$bubbleableMetadata) {
-  $replacements = array();
-  if ($type == 'elephant_user') {
-    foreach ($tokens as $name => $original) {
-      switch ($name) {
-        case 'elephant_user_verification':
-          $replacements[$original] = $data['customanything'];
-          break;
-      }
-    }
-  }
-  return $replacements;
-}
+//function elephant_user_tokens($type, $tokens, array $data = array(), array $options = array(), BubbleableMetadata
+//$bubbleableMetadata) {
+//  $replacements = array();
+//  if ($type == 'elephant_user') {
+//    foreach ($tokens as $name => $original) {
+//      switch ($name) {
+//        case 'elephant_user_verification':
+//          $replacements[$original] = $data['customanything'];
+//          break;
+//      }
+//    }
+//  }
+//  return $replacements;
+//}
+
+
 
 function getAccountVerificationUrl() {
+  $bubbleableMetadata = new BubbleableMetadata();
   $token_service = \Drupal::token();
   $options = ['callback' => 'elephant_mail_tokens'];
-  $data = array('customanything' => 'THIS IS JUST A TEST');
-  $token_service->replace('[elephant_user:elephant_user_verification]', $data);
-
+  $data = array('customanything' => ' A TEST');
+  return $token_service->generate('elephant_user', array('tokens'=>'elephant_user_verification'), $data, $options, $bubbleableMetadata);
 }
 
 function elephant_mail_tokens($replacement, $data, $options) {
