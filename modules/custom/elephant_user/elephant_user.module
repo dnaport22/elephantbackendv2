@@ -1,61 +1,15 @@
 <?php
 
-use Drupal\elephant_user\Service\ActivateAccount;
-use Drupal\Core\Render\BubbleableMetadata;
-use Drupal\Component\Render\PlainTextOutput;
-
 define("VERIFICATION_URL", "http://myelephant.xyz/activation/");
 
 /**
  * Implements hook_mail_alter().
  */
 function elephant_user_mail_alter(&$message) {
+  $activateAccount = \Drupal::service('elephant_rest_gateway.activateaccount');
   if ($message['id'] == 'user_register_no_approval_required') {
-    $token_service = \Drupal::token();
-    $data = array('customanything' => ' A TEST FOR TOKEN ');
     $joined = implode('|||', $message['body']);
-    $joined = $token_service->replace($joined, $data);
+    $joined = strtr($joined, array('!elephant_user_verification' => VERIFICATION_URL . $activateAccount->getUserVerification()));
     $message['body'][] = explode('|||', $joined);
   }
-}
-
-/**
- * Implements hook_token_info().
- */
-function elephant_user_token_info() {
-  $info = array();
-  $info['tokens']['elephant_user']['elephant_user_verification'] = t('Telling drupal that you define custom token');
-  return $info;
-}
-
-/**
- * Implements hook_tokens().
- */
-function elephant_user_tokens($type, $tokens, array $data = array(), array $options = array(), BubbleableMetadata
-$bubbleableMetadata) {
-  $replacements = array();
-  if ($type == 'elephant_user') {
-    foreach ($tokens as $name => $original) {
-      switch ($name) {
-        case 'elephant_user_verification':
-          $replacements[$original] = $data['customanything'];
-          break;
-      }
-    }
-  }
-  return $replacements;
-}
-
-
-//
-//function getAccountVerificationUrl() {
-//  $token_service = \Drupal::token();
-//  $options = ['callback' => 'elephant_mail_tokens'];
-//  $data = array('customanything' => ' A TEST FOR TOKEN ');
-//  return $token_service->replace('elephant_user', array('tokens'=>'elephant_user_verification'), $data);
-//}
-
-function elephant_mail_tokens($replacement, $data, $options) {
-  $replacement['elephant_user:elephant_user_verification'] = "This is now replaced";
-
 }

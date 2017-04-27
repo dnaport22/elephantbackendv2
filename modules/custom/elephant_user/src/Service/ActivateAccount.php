@@ -33,11 +33,11 @@ class ActivateAccount {
     return False;
   }
 
-  public function getUserVerification($uid) {
-    $db = db_select(self::ELEPHANT_USER_VERIFICATION_TABLE);
+  public function getUserVerification() {
+    $db = db_select(self::ELEPHANT_USER_VERIFICATION_TABLE, 'v');
     $result = $db->fields('v', array('code'));
-    $result->condition('v.uid', $uid);
-    return $result->execute();
+    $result->condition('v.uid', $this->getUserUid());
+    return $result->execute()->fetchField();
   }
 
   private function generateVerififcationHash() {
