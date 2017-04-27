@@ -10,6 +10,7 @@ define("VERIFICATION_URL", "http://myelephant.xyz/activation/");
  * Implements hook_mail_alter().
  */
 function elephant_user_mail_alter(&$message) {
+  print_r($message); exit;
   if ($message['id'] == 'register_no_approval_required') {
     $message['body'][] = "- Test for message alteration";
   }
