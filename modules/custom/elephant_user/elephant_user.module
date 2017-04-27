@@ -10,9 +10,12 @@ define("VERIFICATION_URL", "http://myelephant.xyz/activation/");
  * Implements hook_mail_alter().
  */
 function elephant_user_mail_alter(&$message) {
-  print_r($message); exit;
-  if ($message['id'] == 'register_no_approval_required') {
-    $message['body'][] = "- Test for message alteration";
+  if ($message['id'] == 'user_register_no_approval_required') {
+    $token_service = \Drupal::token();
+    $data = array('customanything' => ' A TEST FOR TOKEN ');
+    $joined = implode('|||', $message['body']);
+    $joined = $token_service->replace($joined, $data);
+    $message['body'][] = explode('|||', $joined);
   }
 }
 
@@ -28,30 +31,29 @@ function elephant_user_token_info() {
 /**
  * Implements hook_tokens().
  */
-//function elephant_user_tokens($type, $tokens, array $data = array(), array $options = array(), BubbleableMetadata
-//$bubbleableMetadata) {
-//  $replacements = array();
-//  if ($type == 'elephant_user') {
-//    foreach ($tokens as $name => $original) {
-//      switch ($name) {
-//        case 'elephant_user_verification':
-//          $replacements[$original] = $data['customanything'];
-//          break;
-//      }
-//    }
-//  }
-//  return $replacements;
-//}
-
-
-
-function getAccountVerificationUrl() {
-  $bubbleableMetadata = new BubbleableMetadata();
-  $token_service = \Drupal::token();
-  $options = ['callback' => 'elephant_mail_tokens'];
-  $data = array('customanything' => ' A TEST');
-  return $token_service->generate('elephant_user', array('tokens'=>'elephant_user_verification'), $data, $options, $bubbleableMetadata);
+function elephant_user_tokens($type, $tokens, array $data = array(), array $options = array(), BubbleableMetadata
+$bubbleableMetadata) {
+  $replacements = array();
+  if ($type == 'elephant_user') {
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'elephant_user_verification':
+          $replacements[$original] = $data['customanything'];
+          break;
+      }
+    }
+  }
+  return $replacements;
 }
+
+
+//
+//function getAccountVerificationUrl() {
+//  $token_service = \Drupal::token();
+//  $options = ['callback' => 'elephant_mail_tokens'];
+//  $data = array('customanything' => ' A TEST FOR TOKEN ');
+//  return $token_service->replace('elephant_user', array('tokens'=>'elephant_user_verification'), $data);
+//}
 
 function elephant_mail_tokens($replacement, $data, $options) {
   $replacement['elephant_user:elephant_user_verification'] = "This is now replaced";
