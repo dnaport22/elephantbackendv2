@@ -1,14 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Nav
- * Date: 22/04/2017
- * Time: 12:48
- */
-
 namespace Drupal\elephant_user\Service;
 
 
-class ResetPassword {
+use Drupal\elephant_rest_gateway\Http\ElephantResponseHandler;
 
+class ResetPassword {
+  private $responseHandler;
+
+  public function __construct(ElephantResponseHandler $responseHandler) {
+    $this->responseHandler = $responseHandler;
+  }
+
+  public function RequestReset($mail) {
+    if (user_load_by_mail($mail)) {
+      $user = user_load_by_mail($mail);
+      // Send password reset mail to user
+      _user_mail_notify('password_reset', $user);
+    }
+  }
 }

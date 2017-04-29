@@ -6,10 +6,19 @@ define("VERIFICATION_URL", "http://myelephant.xyz/activation/");
  * Implements hook_mail_alter().
  */
 function elephant_user_mail_alter(&$message) {
-  $activateAccount = \Drupal::service('elephant_rest_gateway.activateaccount');
   if ($message['id'] == 'user_register_no_approval_required') {
     $joined = implode('|||', $message['body']);
-    $joined = strtr($joined, array('!elephant_user_verification' => VERIFICATION_URL . $activateAccount->getUserVerification()));
+    $joined = strtr($joined, array(
+      '!elephant_user_verification' => getActivationUrl()));
     $message['body'][] = explode('|||', $joined);
   }
+}
+
+/**
+ * @return string | url includes user uid and verification code
+ * check Drupal\elephant_user\Service\ActivateAccount
+ */
+function getActivationUrl() {
+  $activateAccount = \Drupal::service('elephant_rest_gateway.activateaccount');
+  return VERIFICATION_URL . $activateAccount->getUserUid() . $activateAccount->getUserVerification();
 }

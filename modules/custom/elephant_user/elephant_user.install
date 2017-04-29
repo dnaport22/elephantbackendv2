@@ -8,6 +8,8 @@
  * Implements hook_schema().
  */
 function elephant_user_schema() {
+
+  // Account verification schema.
   $schema['elephant_user_verification'] = array(
     'description' => 'Stores verification codes for elephant app users.',
     'fields' => array(
@@ -33,5 +35,32 @@ function elephant_user_schema() {
     ),
     'primary key' => array('uid'),
   );
+
+  // Password reset schema.
+  $schema['elephant_user_password_reset'] = array(
+      'description' => 'Stores password reset code for elephant app users.',
+      'fields' => array(
+        'uid' => array(
+          'description' => 'The primary identifier for a user.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ),
+        'code' => array(
+          'description' => 'The reset code for user.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => 'NULL',
+        ),
+      ),
+      'foreign keys' => array(
+        'uid' => array(
+          'table' => 'main_users',
+          'columns' => array('uid' => 'uid'),
+        ),
+      ),
+      'primary key' => array('uid'),
+    );
   return $schema;
 }
