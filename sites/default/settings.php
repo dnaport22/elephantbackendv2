@@ -285,7 +285,7 @@ $config_directories = array();
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = 'joj_lmz7nddOOOlgOEpKuHVop_ub-dl570QvpsdTZqrNRTPk9-Tfk6Gltitt1aP3h6OOgpc3wg';
+$settings['hash_salt'] = 'FrPb2XYEt9ISHASpFbG7pLgsBn788Jp6NVSJeom42nPXqeqEmWA06EnKVP8cjN_UgD3bc2ij2g';
 
 /**
  * Deployment identifier.
@@ -713,14 +713,14 @@ if (file_exists(__DIR__ . '/settings.local.php')) {
   include __DIR__ . '/settings.local.php';
 }
 $databases['default']['default'] = array (
-  'database' => 'u482157177_elv2',
-  'username' => 'u482157177_elv2',
-  'password' => 'SusApp',
-  'prefix' => 'main_',
-  'host' => '',
-  'port' => '',
+  'database' => 'elephantv2',
+  'username' => 'root',
+  'password' => 'nav',
+  'prefix' => '',
+  'host' => 'localhost',
+  'port' => '3306',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
 );
 $settings['install_profile'] = 'standard';
-$config_directories['sync'] = 'sites/default/files/config_Pcfv_INlp1EvCJqQW8dWAg22tgkAMtPXF3zCibxJIbLQkfSaYNZOOfYNXFFD8QicK5q3MbgqhA/sync';
+$config_directories['sync'] = 'sites/default/files/config_jV3qx_No-Jyum0JSemmhgFViqM6DH6a4XYntiPJOmdd2oQtuutuA-FNfiEBb4R87HhkQsraQ7A/sync';

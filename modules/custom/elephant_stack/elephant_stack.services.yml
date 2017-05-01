@@ -1,0 +1,49 @@
+services:
+ ###############################################################################   
+  # Registering REST_Gateway classes  
+  elephant_stack.responsehandler:
+    class: Drupal\elephant_stack\REST_Gateway\Http\ElephantResponseHandler
+
+  elephant_stack.requesthandler:
+    class: Drupal\elephant_stack\REST_Gateway\Http\ElephantRequestHandler
+    arguments: ['@elephant_stack.responsehandler']
+    
+  ##############################################################################  
+  # Registering Components/Elephant_User classes
+  elephant_stack.userservicehandler:
+    class: Drupal\elephant_stack\Components\Elephant_User\Manager\UserServiceHandler
+
+  elephant_stack.loginservice:
+    class: Drupal\elephant_stack\Components\Elephant_User\Service\LoginService
+    arguments: ['@elephant_stack.responsehandler']
+
+  elephant_stack.activateaccount:
+    class: Drupal\elephant_stack\Components\Elephant_User\Service\ActivateAccount
+  
+  elephant_stack.resetpassword:
+    class: Drupal\elephant_stack\Components\Elephant_User\Service\ResetPassword
+    
+  elephant_stack.activateuser:
+    class: Drupal\elephant_stack\Components\Elephant_User\Service\ActivateUser
+    arguments: ['@elephant_stack.activateaccount','@elephant_stack.responsehandler']
+    
+  elephant_stack.updatepassword:
+    class: Drupal\elephant_stack\Components\Elephant_User\UpdatePassword
+    arguments: ['@elephant_stack.resetpassword','@elephant_stack.responsehandler']
+
+  elephant_stack.registerservice:
+    class: Drupal\elephant_stack\Components\Elephant_User\RegisterService
+    arguments: ['@elephant_stack.responsehandler', '@elephant_stack.activateaccount']
+
+  ##############################################################################
+  # Registering Components/Elephant_Item classes
+  elephant_stack.itemmanager:
+    class: Drupal\elephant_stack\Components\Elephant_Item\Manager\ItemManager
+
+  elephant_stack.appintention:
+    class: Drupal\elephant_stack\Components\Elephant_Item\Service\AppIntention
+    arguments: ['@elephant_stack.itemmanager', '@elephant_stack.responsehandler']
+
+  elephant_stack.userintention:
+      class: Drupal\elephant_stack\Components\Elephant_Item\Service\UserIntention
+      arguments: ['@elephant_stack.itemmanager', '@elephant_stack.responsehandler']

@@ -1,0 +1,9 @@
+name: Elephant App Stack
+type: module
+description: "This is a module package for elephant app."
+dependencies:
+  - rest
+  - node
+version: '0.1'
+core: '8.x'
+project: 'elephant app'

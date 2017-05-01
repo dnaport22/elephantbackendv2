@@ -1,7 +1,0 @@
-elephant_rest_gateway.intent:
-  path: 'elephantapp/rest'
-  defaults:
-    _controller: '\Drupal\elephant_rest_gateway\Http\ElephantRequestHandler::getUserRequest'
-  methods: [POST]
-  requirements:
-    _access: 'TRUE'
