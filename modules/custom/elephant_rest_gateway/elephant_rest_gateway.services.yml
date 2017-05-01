@@ -15,7 +15,17 @@ services:
 
   elephant_rest_gateway.activateaccount:
     class: Drupal\elephant_user\Service\ActivateAccount
-    arguments: [Drupal\Component\Utility\Random]
+  
+  elephant_reset_gateway.resetpassword:
+    class: Drupal\elephant_user\Service\ResetPassword
+    
+  elephant_rest_gateway.activateuser:
+    class: Drupal\elephant_user\Service\ActivateUser
+    arguments: ['@elephant_rest_gateway.activateaccount','@elephant_rest_gateway.responsehandler']
+    
+  elephant_rest_gateway.updatepassword:
+    class: Drupal\elephant_user\Service\UpdatePassword
+    arguments: ['@elephant_rest_gateway.passwordreset','@elephant_rest_gateway.responsehandler']
 
   elephant_rest_gateway.registerservice:
     class: Drupal\elephant_user\Service\RegisterService

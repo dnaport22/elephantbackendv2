@@ -22,5 +22,20 @@ class UserServiceHandler {
     $data = ElephantService::getIntentData();
     return $registerService->createUser($data);
   }
+  
+  public function loadActivate($uid, $code) {
+    $activateUser = \Drupal::service('elephant_rest_gateway.activateuser');
+    return $activateUser->ActivateUserAccount($uid, $code);
+  }
+  
+  public function loadRequestPassReset($email) {
+    $requestService = \Drupal::service('elephant_rest_gateway.updatepassword');
+    return $requestService->RequestReset($email);
+  }
+  
+  public function loadResetUserPassword($uid, $code, $newpass) {
+    $requestService = \Drupal::service('elephant_rest_gateway.updatepassword');
+    return $requestService->UpdateUserPassword($uid, $code, $newpass);
+  }
 
 }

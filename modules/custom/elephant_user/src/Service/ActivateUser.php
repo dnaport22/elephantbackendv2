@@ -14,8 +14,8 @@ class ActivateUser {
     $this->responseHandler = $responseHandler;
   }
 
-  public function ActivateUserAccount($uid) {
-    if ($this->activateAccount->verifyUser($uid)) {
+  public function ActivateUserAccount($uid, $code) {
+    if ($this->activateAccount->verifyUser($uid, $code)) {
       $user = User::load($uid);
       if (!$user->isActive()) {
         $user->activate();

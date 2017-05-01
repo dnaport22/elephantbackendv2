@@ -1,6 +1,7 @@
 <?php
 
 define("VERIFICATION_URL", "http://myelephant.xyz/activation/");
+define("PASSWORD_RESET_URL", "http://elephant.xyz/passreset");
 
 /**
  * Implements hook_mail_alter().
@@ -12,6 +13,13 @@ function elephant_user_mail_alter(&$message) {
       '!elephant_user_verification' => getActivationUrl()));
     $message['body'][] = explode('|||', $joined);
   }
+  
+  if ($message['id'] == 'user_password_reset') {
+    $joined = implode('|||', $message['body']);
+    $joined = strtr($joined, array(
+      '!elephant_user_reset_token' => getPassResetToken()));
+    $message['body'][] = explode('|||', $joined);
+  }
 }
 
 /**
@@ -21,4 +29,13 @@ function elephant_user_mail_alter(&$message) {
 function getActivationUrl() {
   $activateAccount = \Drupal::service('elephant_rest_gateway.activateaccount');
   return VERIFICATION_URL . $activateAccount->getUserUid() . $activateAccount->getUserVerification();
+}
+
+/**
+ * @return string | url includes user uid and reset token
+ * check Drupal\elephant_user\Service\ResetPassword
+ */
+function getPassResetToken() {
+  $resetPassword = \Drupal::service('elephant_rest_gateway.resetpassword');
+  return PASSWORD_RESET_URL . $resetPassword->getUserUid() . $resetPassword->getPassResetToken();
 }

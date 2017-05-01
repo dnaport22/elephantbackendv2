@@ -6,6 +6,9 @@ abstract class ElephantService {
   const USER_LOGIN = 'login';
   const USER_REGISTER = 'register';
   const USER_DELETE = 'user_delete';
+  const USER_ACTIVATE = 'user_activate';
+  const USER_REQUEST_RESET_PASS = 'user_request_reset_pass';
+  const USER_RESET_PASS = 'user_reset_pass';
   const ITEM_UPLOAD = 'item_upload';
   const ITEM_DELETE = 'item_delete';
   const ITEM_DONATE = 'item_donate';
@@ -19,6 +22,9 @@ abstract class ElephantService {
     switch ($type) {
       case self::USER_LOGIN: return $this->runLogin($data);
       case self::USER_REGISTER: return $this->runRegister($data);
+      case self::USER_ACTIVATE: return $this->runActivate($data); 
+      case self::USER_REQUEST_RESET_PASS: return $this->runPassResetRequest($data);
+      case self::USER_RESET_PASS: return $this->runPassReset($data);  
       case self::USER_DELETE: return;
     }
   }
@@ -46,6 +52,27 @@ abstract class ElephantService {
     $this->setIntentData($register_data);
     $registerProvider = \Drupal::service('elephant_rest_gateway.userservicehandler');
     return $registerProvider->loadRegister();
+  }
+  
+  private function runActivate($data) {
+    $uid = $data->query->get('uid');
+    $code = $data->query->get('code');
+    $activationService = \Drupal::service('elephant_rest_gateway.userservicehandler');
+    return $activationService->loadActivation($uid, $code);       
+  }
+  
+  private function runPassResetRequest($data) {
+    $email = json_decode($data->getContent(), TRUE);
+    $resetRequestService = \Drupal::service('elephant_rest_gateway.userservicehandler');
+    return $resetRequestService->loadRequestResetPass($email);
+  }
+  
+  private function runPassReset($data) {
+    $uid = $data->query->get('uid');
+    $token = $data->query->get('code');
+    $pass = $data->query->get('pass');
+    $resetService = \Drupal::service('elephant_rest_gateway.userservicehandler');
+    return $resetService->loadResetUserPass($uid, $token, $pass);    
   }
 
   private function runUserDelete($data) {

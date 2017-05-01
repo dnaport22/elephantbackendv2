@@ -40,15 +40,16 @@ class ActivateAccount {
     return $result->execute()->fetchField();
   }
 
-  public function verifyUser($uid) {
+  public function verifyUser($uid, $code) {
     $db = db_select(self::ELEPHANT_USER_VERIFICATION_TABLE, 'v');
     $result = $db->fields('v', array('code'));
     $result->condition('v.uid', $uid);
-    if ($result->execute()->fetchField() > 0) {
+    $orig_code = $result->execute()->fetchField();
+    if ($orig_code == $code) {
       return True;
     }
-
-    return Fasle;
+    
+    return False;
   }
 
   private function generateVerififcationHash() {

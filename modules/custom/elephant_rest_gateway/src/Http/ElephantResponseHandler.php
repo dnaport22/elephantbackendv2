@@ -109,4 +109,32 @@ class ElephantResponseHandler extends JsonResponse {
       'content' => $content
     ));
   }
+  
+  public function onPassResetSuccess() {
+    return $this->setData(array(
+        'status' => 1,
+        'message' => 'password reset success'
+    ));
+  }
+  
+  public function onPassResetError() {
+    return $this->setData(array(
+        'status' => 0,
+        'message' => 'error while reseting password'
+    ));
+  }
+  
+  public function onPassResetEmailSent() {
+    return $this->setData(array(
+        'status' => 1,
+        'message' => 'password reset email sent'
+    ));
+  }
+  
+  public function onPassResetEmailSentError() {
+    return $this->setData(array(
+        'status' => 0,
+        'message' => 'error while sending pass reset email'
+    ));
+  }
 }
