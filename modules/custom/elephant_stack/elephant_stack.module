@@ -1,12 +1,12 @@
 <?php
 define("MODULE_NAME", "elephant_stack");
 define("VERIFICATION_URL", "http://myelephant.xyz/activation/");
-define("PASSWORD_RESET_URL", "http://elephant.xyz/passreset");
+define("PASSWORD_RESET_URL", "http://elephant.xyz/passreset/");
 
 /**
  * Implements hook_mail_alter().
  */
-function elephant_user_mail_alter(&$message) {
+function elephant_stack_mail_alter(&$message) {
   if ($message['id'] == 'user_register_no_approval_required') {
     $joined = implode('|||', $message['body']);
     $joined = strtr($joined, array(
@@ -28,7 +28,7 @@ function elephant_user_mail_alter(&$message) {
  */
 function getActivationUrl() {
   $activateAccount = \Drupal::service('elephant_stack.activateaccount');
-  return VERIFICATION_URL . $activateAccount->getUserUid() . $activateAccount->getUserVerification();
+  return VERIFICATION_URL . $activateAccount->getUserUid() . "/" . $activateAccount->getUserVerification();
 }
 
 /**
@@ -37,5 +37,5 @@ function getActivationUrl() {
  */
 function getPassResetToken() {
   $resetPassword = \Drupal::service('elephant_stack.resetpassword');
-  return PASSWORD_RESET_URL . $resetPassword->getUserUid() . $resetPassword->getPassResetToken();
+  return PASSWORD_RESET_URL . $resetPassword->getUserUid() . "/" . $resetPassword->getPassResetToken();
 }

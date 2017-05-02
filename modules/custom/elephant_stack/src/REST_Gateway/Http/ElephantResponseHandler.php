@@ -136,4 +136,25 @@ class ElephantResponseHandler extends JsonResponse {
         'message' => 'error while sending pass reset email'
     ));
   }
+
+  public function onAccountActivateSuccess() {
+    return $this->setData(array(
+      'status' => 1,
+      'message' => 'account activated successfully'
+    ));
+  }
+
+  public function onAccountAlreadyActive() {
+    return $this->setData(array(
+      'status' => 1,
+      'message' => 'account already active'
+    ));
+  }
+
+  public function onAccountActivateError() {
+    return $this->setData(array(
+      'status' => 0,
+      'message' => 'error while activating account'
+    ));
+  }
 }

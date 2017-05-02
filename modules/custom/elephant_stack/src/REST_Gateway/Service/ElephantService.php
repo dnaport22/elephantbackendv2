@@ -92,10 +92,9 @@ abstract class ElephantService {
    * @return mixed
    */
   private function runActivate($data) {
-    $uid = $data->query->get('uid');
-    $code = $data->query->get('code');
+    $data = json_decode($data->getContent(), TRUE);
     $activationService = \Drupal::service(self::USER_SERVICE_HANDLER);
-    return $activationService->loadActivation($uid, $code);       
+    return $activationService->loadActivate($data['uid'], $data['code']);
   }
 
   /**

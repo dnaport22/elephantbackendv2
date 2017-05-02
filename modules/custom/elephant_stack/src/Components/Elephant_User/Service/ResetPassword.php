@@ -22,7 +22,11 @@ class ResetPassword {
   }
 
   public function storePassResetToken() {
-    $fields = array('uid' => $this->getUserUid(), 'code' => $this->generatePassResetHash());
+    $fields = array(
+      'uid' => $this->getUserUid(),
+      'code' => $this->generatePassResetHash(),
+      'date' => date("Y-m-d H:i:s"),
+      );
     $db = db_insert(self::ELEPHANT_USER_PASSWORD_RESET_TABLE);
     $db->fields($fields);
 

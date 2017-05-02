@@ -22,7 +22,11 @@ class ActivateAccount {
   }
 
   public function storeUserVerification() {
-    $fields = array('uid' => $this->getUserUid(), 'code' => $this->generateVerififcationHash());
+    $fields = array(
+      'uid' => $this->getUserUid(),
+      'code' => $this->generateVerififcationHash(),
+      'date' => date("Y-m-d H:i:s"),
+    );
     $db = db_insert(self::ELEPHANT_USER_VERIFICATION_TABLE);
     $db->fields($fields);
 

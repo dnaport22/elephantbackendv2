@@ -17,8 +17,9 @@ class ActivateUser {
   public function ActivateUserAccount($uid, $code) {
     if ($this->activateAccount->verifyUser($uid, $code)) {
       $user = User::load($uid);
-      if (!$user->isActive()) {
+      if ($user->isBlocked()) {
         $user->activate();
+        $user->save();
         return $this->responseHandler->onAccountActivateSuccess();
       }
 
