@@ -27,7 +27,7 @@ function elephant_user_mail_alter(&$message) {
  * check Drupal\elephant_user\Service\ActivateAccount
  */
 function getActivationUrl() {
-  $activateAccount = \Drupal::service('elephant_rest_gateway.activateaccount');
+  $activateAccount = \Drupal::service('elephant_stack.activateaccount');
   return VERIFICATION_URL . $activateAccount->getUserUid() . $activateAccount->getUserVerification();
 }
 
@@ -36,6 +36,6 @@ function getActivationUrl() {
  * check Drupal\elephant_user\Service\ResetPassword
  */
 function getPassResetToken() {
-  $resetPassword = \Drupal::service('elephant_rest_gateway.resetpassword');
+  $resetPassword = \Drupal::service('elephant_stack.resetpassword');
   return PASSWORD_RESET_URL . $resetPassword->getUserUid() . $resetPassword->getPassResetToken();
 }

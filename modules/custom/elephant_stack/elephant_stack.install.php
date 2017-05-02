@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- *
+ * elephant_stack on install tasks.
  */
 
 /**
@@ -38,29 +38,29 @@ function elephant_user_schema() {
 
   // Password reset schema.
   $schema['elephant_user_password_reset'] = array(
-      'description' => 'Stores password reset code for elephant app users.',
-      'fields' => array(
-        'uid' => array(
-          'description' => 'The primary identifier for a user.',
-          'type' => 'int',
-          'unsigned' => TRUE,
-          'not null' => TRUE,
-        ),
-        'code' => array(
-          'description' => 'The reset code for user.',
-          'type' => 'varchar',
-          'length' => 255,
-          'not null' => TRUE,
-          'default' => 'NULL',
-        ),
+    'description' => 'Stores password reset code for elephant app users.',
+    'fields' => array(
+      'uid' => array(
+        'description' => 'The primary identifier for a user.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
       ),
-      'foreign keys' => array(
-        'uid' => array(
-          'table' => 'main_users',
-          'columns' => array('uid' => 'uid'),
-        ),
+      'code' => array(
+        'description' => 'The reset code for user.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => 'NULL',
       ),
-      'primary key' => array('uid'),
-    );
+    ),
+    'foreign keys' => array(
+      'uid' => array(
+        'table' => 'main_users',
+        'columns' => array('uid' => 'uid'),
+      ),
+    ),
+    'primary key' => array('uid'),
+  );
   return $schema;
 }

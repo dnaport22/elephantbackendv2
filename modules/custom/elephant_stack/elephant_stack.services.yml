@@ -28,11 +28,11 @@ services:
     arguments: ['@elephant_stack.activateaccount','@elephant_stack.responsehandler']
     
   elephant_stack.updatepassword:
-    class: Drupal\elephant_stack\Components\Elephant_User\UpdatePassword
+    class: Drupal\elephant_stack\Components\Elephant_User\Service\UpdatePassword
     arguments: ['@elephant_stack.resetpassword','@elephant_stack.responsehandler']
 
   elephant_stack.registerservice:
-    class: Drupal\elephant_stack\Components\Elephant_User\RegisterService
+    class: Drupal\elephant_stack\Components\Elephant_User\Service\RegisterService
     arguments: ['@elephant_stack.responsehandler', '@elephant_stack.activateaccount']
 
   ##############################################################################
