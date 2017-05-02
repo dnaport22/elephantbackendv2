@@ -65,11 +65,7 @@ abstract class ElephantService {
 
   /**
    * Sample JSON data:
-   * {
-   *   "name": "myname",
-   *   "email": "mymail@lsbu.ac.uk",
-   *   "pass": "mypassword"
-   * }
+   * c
    *
    * @param $data
    * @return mixed
