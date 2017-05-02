@@ -38,16 +38,16 @@ class ResetPassword {
   }
 
   public function getPassResetToken() {
-    $db = db_select(self::ELEPHANT_USER_PASSWORD_RESET_TABLE, 'v');
-    $result = $db->fields('v', array('code'));
-    $result->condition('v.uid', $this->getUserUid());
+    $db = db_select(self::ELEPHANT_USER_PASSWORD_RESET_TABLE, 'p');
+    $result = $db->fields('p', array('code'));
+    $result->condition('p.uid', $this->getUserUid());
     return $result->execute()->fetchField();
   }
 
   public function verifyResetToken($uid, $code) {
-    $db = db_select(self::ELEPHANT_USER_PASSWORD_RESET_TABLE, 'v');
-    $result = $db->fields('v', array('code'));
-    $result->condition('v.uid', $uid);
+    $db = db_select(self::ELEPHANT_USER_PASSWORD_RESET_TABLE, 'p');
+    $result = $db->fields('p', array('code'));
+    $result->condition('p.uid', $uid);
     $orig_code = $result->execute()->fetchField();
     if ($orig_code == $code) {
       return True;
