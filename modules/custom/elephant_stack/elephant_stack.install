@@ -7,7 +7,7 @@
 /**
  * Implements hook_schema().
  */
-function elephant_user_schema() {
+function elephant_stack_schema() {
 
   // Account verification schema.
   $schema['elephant_user_verification'] = array(
@@ -26,10 +26,14 @@ function elephant_user_schema() {
         'not null' => TRUE,
         'default' => 'NULL',
       ),
+      'date' => array(
+        'description' => 'The datetime when code for generated.',
+        'mysql_type' => 'datetime',
+      ),
     ),
     'foreign keys' => array(
       'uid' => array(
-        'table' => 'main_users',
+        'table' => 'users',
         'columns' => array('uid' => 'uid'),
       ),
     ),
@@ -53,14 +57,19 @@ function elephant_user_schema() {
         'not null' => TRUE,
         'default' => 'NULL',
       ),
+      'date' => array(
+        'description' => 'The datetime when code for generated.',
+        'mysql_type' => 'datetime',
+      ),
     ),
     'foreign keys' => array(
       'uid' => array(
-        'table' => 'main_users',
+        'table' => 'users',
         'columns' => array('uid' => 'uid'),
       ),
     ),
     'primary key' => array('uid'),
   );
+
   return $schema;
 }
