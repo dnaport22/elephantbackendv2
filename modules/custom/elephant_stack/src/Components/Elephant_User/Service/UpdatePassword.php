@@ -1,9 +1,8 @@
 <?php
 namespace Drupal\elephant_stack\Components\Elephant_User\Service;
 
+use Drupal\elephant_stack\REST_Gateway\Http\ElephantResponseHandler;
 use Drupal\user\Entity\User;
-use Drupal\elephant_stack\Components\Elephant_User\Service\ResetPassword;
-use Drupal\elephant_stack\REST_Gateway\Http\ElephantRequestHandler;
 
 class UpdatePassword {
   private $resetPassword;
@@ -32,7 +31,9 @@ class UpdatePassword {
   public function UpdateUserPassword($uid, $code, $newpass) {
     if ($this->resetPassword->verifyResetToken($uid, $code)) {
       $user = User::load($uid);
-      if ($user->setPassword($newpass)) {
+      if ($user) {
+        $user->setPassword($newpass);
+        $user->save();
         return $this->responseHandler->onPassResetSuccess();
       }
       

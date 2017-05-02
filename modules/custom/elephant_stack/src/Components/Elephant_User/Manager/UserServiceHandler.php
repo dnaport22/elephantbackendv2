@@ -38,7 +38,7 @@ class UserServiceHandler {
     return $requestService->RequestReset($email);
   }
   
-  public function loadResetUserPassword($uid, $code, $newpass) {
+  public function loadResetUserPass($uid, $code, $newpass) {
     $requestService = \Drupal::service(self::UPDATE_PASSWORD_SERVICE);
     return $requestService->UpdateUserPassword($uid, $code, $newpass);
   }

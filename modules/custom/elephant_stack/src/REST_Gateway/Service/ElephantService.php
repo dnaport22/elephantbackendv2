@@ -107,9 +107,9 @@ abstract class ElephantService {
    * @return mixed
    */
   private function runPassResetRequest($data) {
-    $email = json_decode($data->getContent(), TRUE);
+    $data = json_decode($data->getContent(), TRUE);
     $resetRequestService = \Drupal::service(self::USER_SERVICE_HANDLER);
-    return $resetRequestService->loadRequestResetPass($email);
+    return $resetRequestService->loadRequestPassReset($data['email']);
   }
 
   /**
@@ -124,11 +124,9 @@ abstract class ElephantService {
    * @return mixed
    */
   private function runPassReset($data) {
-    $uid = $data->query->get('uid');
-    $token = $data->query->get('code');
-    $pass = $data->query->get('pass');
+    $data = json_decode($data->getContent(), TRUE);
     $resetService = \Drupal::service(self::USER_SERVICE_HANDLER);
-    return $resetService->loadResetUserPass($uid, $token, $pass);    
+    return $resetService->loadResetUserPass($data['uid'], $data['code'], $data['pass']);
   }
 
   private function runUserDelete($data) {
