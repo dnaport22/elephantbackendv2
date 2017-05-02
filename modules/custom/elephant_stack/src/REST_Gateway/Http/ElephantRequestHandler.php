@@ -4,6 +4,21 @@ namespace Drupal\elephant_stack\REST_Gateway\Http;
 use Drupal\elephant_stack\REST_Gateway\Service\ElephantService;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * The url will be updated once we moved to cloud server.
+ * Base url: http://elephantv2.local
+ * User related ajax calls:
+ * url => http://elephantv2.local/elephantapp/rest?entity=user& \
+ *            type={login, register, user_activate, user_delete, user_request_reset_pass, user_reset_pass}
+ *
+ * Item related ajax calls:
+ * url => http://elephantv2.local/elephantapp/rest?entity=item& \
+ *            type={item_upload, item_delete, item_donate, item_request, item_all, item_user_only}
+ *
+ * Class ElephantRequestHandler
+ * @package Drupal\elephant_stack\REST_Gateway\Http
+ */
+
 class ElephantRequestHandler extends ElephantService {
   private $intentEntity;
   private $intentType;

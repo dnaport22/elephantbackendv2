@@ -46,6 +46,16 @@ abstract class ElephantService {
     }
   }
 
+  /**
+   * Sample JSON data:
+   * {
+   *   "email": "mymail@lsbu.ac.uk",
+   *   "pass": "mypassword"
+   * }
+   *
+   * @param $data
+   * @return mixed
+   */
   private function runLogin($data) {
     $login_data = json_decode($data->getContent(), TRUE);
     $this->setIntentData($login_data);
@@ -53,26 +63,67 @@ abstract class ElephantService {
     return $loginProvider->loadLogin();
   }
 
+  /**
+   * Sample JSON data:
+   * {
+   *   "name": "myname",
+   *   "email": "mymail@lsbu.ac.uk",
+   *   "pass": "mypassword"
+   * }
+   *
+   * @param $data
+   * @return mixed
+   */
   private function runRegister($data) {
     $register_data = json_decode($data->getContent(), TRUE);
     $this->setIntentData($register_data);
     $registerProvider = \Drupal::service(self::USER_SERVICE_HANDLER);
     return $registerProvider->loadRegister();
   }
-  
+
+  /**
+   * Sample JSON data:
+   * {
+   *   "uid": "1",
+   *   "code": "sdkjfbskjdbf"
+   * }
+   *
+   * @param $data
+   * @return mixed
+   */
   private function runActivate($data) {
     $uid = $data->query->get('uid');
     $code = $data->query->get('code');
     $activationService = \Drupal::service(self::USER_SERVICE_HANDLER);
     return $activationService->loadActivation($uid, $code);       
   }
-  
+
+  /**
+   * Sample JSON data:
+   * {
+   *   "email": "mymail@lsbu.ac.uk"
+   * }
+   *
+   * @param $data
+   * @return mixed
+   */
   private function runPassResetRequest($data) {
     $email = json_decode($data->getContent(), TRUE);
     $resetRequestService = \Drupal::service(self::USER_SERVICE_HANDLER);
     return $resetRequestService->loadRequestResetPass($email);
   }
-  
+
+  /**
+   * Sample JSON data:
+   * {
+   *   "uid": "1",
+   *   "code": "asfkbjsfhd",
+   *   "pass": "mynewpassword"
+   * }
+   *
+   * @param $data
+   * @return mixed
+   */
   private function runPassReset($data) {
     $uid = $data->query->get('uid');
     $token = $data->query->get('code');
@@ -95,19 +146,19 @@ abstract class ElephantService {
     $file = $data->files->get('image');
     $uid = $data->request->get('uid');
     $intent = \Drupal::service(self::ITEM_INTENTION);
-    $intent->uploadItem($name, $body, $uid, $file);
+    return $intent->uploadItem($name, $body, $uid, $file);
   }
 
   private function runItemDelete($data) {
     $nid = json_decode($data->getContent(), TRUE)['nid'];
     $intent = \Drupal::service(self::ITEM_INTENTION);
-    $intent->deleteItem($nid);
+    return $intent->deleteItem($nid);
   }
 
   private function runItemDonate($data) {
     $nid = json_decode($data->getContent(), TRUE)['nid'];
     $intent = \Drupal::service(self::ITEM_INTENTION);
-    $intent->donateItem($nid);
+    return $intent->donateItem($nid);
   }
 
   private function runItemRequest($data) {
@@ -116,13 +167,13 @@ abstract class ElephantService {
     $uid = $data['uid'];
     $nid = $data['nid'];
     $intent = \Drupal::service(self::ITEM_INTENTION);
-    $intent->requestItem($msg, $nid, $uid);
+    return $intent->requestItem($msg, $nid, $uid);
   }
 
   private function runItemAll($data) {
     $offset = json_decode($data->getContent(), TRUE)['offset'];
     $intent = \Drupal::service(self::APP_INTENTION);
-    $intent->mainList($offset);
+    return $intent->mainList($offset);
   }
 
   private function runItemUserOnly($data) {
@@ -130,7 +181,7 @@ abstract class ElephantService {
     $offset = $data['offset'];
     $uid = $data['uid'];
     $intent = \Drupal::service(self::APP_INTENTION);
-    $intent->userList($uid, $offset);
+    return $intent->userList($uid, $offset);
   }
 
   public function setIntentData($data) {
