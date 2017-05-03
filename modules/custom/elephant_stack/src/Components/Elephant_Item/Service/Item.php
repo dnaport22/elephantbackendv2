@@ -2,6 +2,7 @@
 namespace Drupal\elephant_stack\Components\Elephant_Item\Service;
 
 use Drupal\node\Entity\Node;
+use Drupal\user\Entity\User;
 
 abstract class Item {
 
@@ -87,6 +88,8 @@ abstract class Item {
     ));
 
     if ($node->save()) {
+      // Register pending approval mail type is modified for item request messages.
+      _user_mail_notify('register_pending_approval', User::load($uid));
       return True;
     }
 
