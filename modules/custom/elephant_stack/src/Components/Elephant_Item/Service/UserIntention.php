@@ -1,6 +1,9 @@
 <?php
 namespace Drupal\elephant_stack\Components\Elephant_Item\Service;
 
+use Drupal\elephant_stack\Components\Elephant_Item\Manager\ItemManager;
+use Drupal\elephant_stack\REST_Gateway\Http\ElephantResponseHandler;
+
 class UserIntention extends Item {
   private $itemManager;
   private $responder;

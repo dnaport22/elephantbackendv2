@@ -21,17 +21,19 @@ The Elephant App API has only one endpoint which could also be extended when new
    - POST [`/?entity=user&type=user_reset_pass`](#reset-pass)
    
  - __Item__ 
-   - POST `/?entity=item&type=item_upload`
-   - POST `/?entity=item&type=item_delete`
-   - POST `/?entity=item&type=item_donate`
-   - POST `/?entity=item&type=item_request`
-   - GET `/?entity=item&type=item_all`
-   - GET `/?entity=item&type=item_user_only`
+   - POST [`/?entity=item&type=item_upload`](#upload-item)
+   - POST [`/?entity=item&type=item_delete`](#delete-item)
+   - POST [`/?entity=item&type=item_donate`](#donate-item)
+   - POST [`/?entity=item&type=item_request`](#request-item)
+   - GET  [`/?entity=item&type=item_all`](#get-all-items)
+   - GET  [`/?entity=item&type=item_user_only`](#get-user-items)
 
+#User
 ## <a name='login'>Login user</a>
 ### `/?entity=user&type=login`
 __Type:__ application/json <br/>
 __Data:__ <br/>
+
  - email (string) <br/>
  - pass (string)
  
@@ -83,6 +85,7 @@ __Response:__ <br/>
 ### `/?entity=user&type=register`
 __Type:__ application/json <br/>
 __Data:__ <br/>
+
  - name (string) <br/>
  - email (string) <br/>
  - pass (string)
@@ -128,6 +131,7 @@ __Response:__ <br/>
 ### `/?entity=user&type=user_activate`
 __Type:__ application/json <br/>
 __Data:__ <br/>
+
 - uid (int)
 - code (string)
 
@@ -171,6 +175,7 @@ __Response:__ <br/>
 ### `/?entity=user&type=user_request_reset_pass`
 __Type:__ application/json <br/>
 __Data:__ <br/>
+
 - email (string)
 
 ```
@@ -207,6 +212,7 @@ __Response:__ <br/>
 ### `/?entity=user&type=user_reset_pass`
 __Type:__ application/json <br/>
 __Data:__ <br/>
+
 - uid (int) <br/>
 - code (string) <br/>
 - pass (string) <br/>
@@ -236,5 +242,185 @@ __Response:__ <br/>
 {
 	"status": 0,
 	"message": "error while reseting password",
+}
+```
+
+#Item
+## <a name='upload-item'>Upload item</a>
+### `/?entity=item&type=item_upload`
+__Type:__ form-data <br/>
+__Data:__ <br/>
+
+ - name (string)
+ - desc (string)
+ - image (file)
+ - uid (int)
+
+__Response:__ <br/>
+
+<span style="color:green">on-Success:</a>
+
+```
+{
+	"status": 1,
+	"message": "item uploaded",
+}
+```
+
+<span style="color:red">on-Error:</a>
+
+```
+{
+	"status": 0,
+	"message": "system error",
+}
+```
+
+## <a name='request-item'>Request item</a>
+### `/?entity=item&type=item_request`
+__Type:__ application/json <br/>
+__Data:__ <br/>
+
+ - msg (string)
+ - nid (int)
+ - uid (int)
+
+__Response:__ <br/>
+
+<span style="color:green">on-Success:</a>
+
+```
+{
+	"status": 1,
+	"message": "item requested",
+}
+```
+
+<span style="color:red">on-Error:</a>
+
+```
+{
+	"status": 0,
+	"message": "system error",
+}
+```
+
+## <a name='delete-item'>Delete item</a>
+### `/?entity=item&type=item_delete`
+__Type:__ application/json <br/>
+__Data:__ <br/>
+
+ - nid (string)
+
+__Response:__ <br/>
+
+<span style="color:green">on-Success:</a>
+
+```
+{
+	"status": 1,
+	"message": "item deleted",
+}
+```
+
+<span style="color:red">on-Error:</a>
+
+```
+{
+	"status": 0,
+	"message": "system error",
+}
+```
+
+## <a name='donate-item'>Donate item</a>
+### `/?entity=item&type=item_donate`
+__Type:__ application/json <br/>
+__Data:__ <br/>
+
+ - nid (string)
+
+__Response:__ <br/>
+
+<span style="color:green">on-Success:</a>
+
+```
+{
+	"status": 1,
+	"message": "item donated",
+}
+```
+
+<span style="color:red">on-Error:</a>
+
+```
+{
+	"status": 0,
+	"message": "system error",
+}
+```
+
+## <a name='get-all-item'>Get all items</a>
+### `/?entity=item&type=item_all`
+__Type:__ application/json <br/>
+__Data:__ <br/>
+
+ - offset (int)
+
+__Response:__ <br/>
+
+<span style="color:green">on-Success:</a>
+
+```
+{
+	"data": {
+		"id": 1,
+		"name": book,
+		"description": foobar,
+		"owner": 2,
+		"image_src": "http://jbdsakjhbas",
+		"post_date": 22/09/1889
+	}
+}
+```
+
+<span style="color:red">on-Error:</a>
+
+```
+{
+	"status": 0,
+	"message": "system error",
+}
+```
+
+## <a name='get-user-item'>get user items</a>
+### `/?entity=item&type=item_user`
+__Type:__ application/json <br/>
+__Data:__ <br/>
+
+ - offset (int)
+
+__Response:__ <br/>
+
+<span style="color:green">on-Success:</a>
+
+```
+{
+	"data": {
+		"id": 1,
+		"name": book,
+		"description": foobar,
+		"owner": 2,
+		"image_src": "http://jbdsakjhbas",
+		"post_date": 22/09/1889
+	}
+}
+```
+
+<span style="color:red">on-Error:</a>
+
+```
+{
+	"status": 0,
+	"message": "system error",
 }
 ```

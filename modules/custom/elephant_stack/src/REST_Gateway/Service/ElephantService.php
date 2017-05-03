@@ -133,6 +133,10 @@ abstract class ElephantService {
     //TODO: call methods to logout user
   }
 
+  /**
+   * @param $data
+   * @return mixed
+   */
   private function runItemUpload($data) {
     $name = $data->request->get('name');
     $body = $data->request->get('desc');
@@ -142,33 +146,50 @@ abstract class ElephantService {
     return $intent->uploadItem($name, $body, $uid, $file);
   }
 
+  /**
+   * @param $data
+   * @return mixed
+   */
   private function runItemDelete($data) {
     $nid = json_decode($data->getContent(), TRUE)['nid'];
     $intent = \Drupal::service(self::ITEM_INTENTION);
     return $intent->deleteItem($nid);
   }
 
+  /**
+   * @param $data
+   * @return mixed
+   */
   private function runItemDonate($data) {
     $nid = json_decode($data->getContent(), TRUE)['nid'];
     $intent = \Drupal::service(self::ITEM_INTENTION);
     return $intent->donateItem($nid);
   }
 
+  /**
+   * @param $data
+   * @return mixed
+   */
   private function runItemRequest($data) {
     $data = json_decode($data->getContent(), TRUE);
-    $msg = $data['msg'];
-    $uid = $data['uid'];
-    $nid = $data['nid'];
     $intent = \Drupal::service(self::ITEM_INTENTION);
-    return $intent->requestItem($msg, $nid, $uid);
+    return $intent->requestItem($data['msg'], $data['nid'], $data['uid']);
   }
 
+  /**
+   * @param $data
+   * @return mixed
+   */
   private function runItemAll($data) {
     $offset = json_decode($data->getContent(), TRUE)['offset'];
     $intent = \Drupal::service(self::APP_INTENTION);
     return $intent->mainList($offset);
   }
 
+  /**
+   * @param $data
+   * @return mixed
+   */
   private function runItemUserOnly($data) {
     $data = json_decode($data->getContent(), TRUE);
     $offset = $data['offset'];
@@ -177,10 +198,16 @@ abstract class ElephantService {
     return $intent->userList($uid, $offset);
   }
 
+  /**
+   * @param $data
+   */
   public function setIntentData($data) {
     ElephantService::$inentData = $data;
   }
 
+  /**
+   * @return mixed
+   */
   public static function getIntentData() {
     return ElephantService::$inentData;
   }
