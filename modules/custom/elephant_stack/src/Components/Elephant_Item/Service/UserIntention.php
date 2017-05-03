@@ -49,8 +49,8 @@ class UserIntention extends Item {
    * @param $nid
    * @return bool
    */
-  public function donateItem($nid) {
-    if (self::itemDonated($nid)) {
+  public function donateItem($nid, $uid) {
+    if (self::itemDonated($nid, $uid)) {
       return $this->responder->onItemDonatedResponse();
     }
     return $this->responder->onErrorResponse();
@@ -61,8 +61,8 @@ class UserIntention extends Item {
    * @param $nid
    * @return bool
    */
-  public function deleteItem($nid) {
-    if (self::itemDelete($nid)) {
+  public function deleteItem($nid, $uid) {
+    if (self::itemDelete($nid, $uid)) {
       return $this->responder->onItemDeletedResponse();
     }
 

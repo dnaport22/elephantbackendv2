@@ -43,8 +43,9 @@ abstract class Item {
    * @param $nid
    * @return bool
    */
-  protected function itemDelete($nid) {
+  protected function itemDelete($nid, $uid) {
     $node = $this->getNode($nid);
+    $node->setRevisionAuthorId($uid);
     if ($node->delete()) {
       return True;
     }
@@ -57,9 +58,10 @@ abstract class Item {
    * @param $nid
    * @return bool
    */
-  protected function itemDonated($nid) {
+  protected function itemDonated($nid, $uid) {
     $node = $this->getNode($nid);
     $node->set('field_item_status', 'donated');
+    $node->setRevisionAuthorId($uid);
     if ($node->save()) {
       return True;
     }

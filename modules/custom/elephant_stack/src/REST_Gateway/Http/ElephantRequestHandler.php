@@ -13,7 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * Item related ajax calls:
  * url => http://elephantv2.local/elephantapp/rest?entity=item& \
- *            type={item_upload, item_delete, item_donate, item_request, item_all, item_user_only}
+ *            type={item_upload, item_delete, item_donate, item_request, item_all, item_user_only} \
+ *              key=user_unique_key
  *
  * Class ElephantRequestHandler
  * @package Drupal\elephant_stack\REST_Gateway\Http

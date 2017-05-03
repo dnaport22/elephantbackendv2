@@ -20,6 +20,10 @@ function elephant_stack_mail_alter(&$message) {
       '!elephant_user_reset_token' => getPassResetToken()));
     $message['body'][] = explode('|||', $joined);
   }
+
+  if ($message['id'] == 'user_register_pending_approval') {
+    // TODO: Alter message
+  }
 }
 
 /**
@@ -38,4 +42,35 @@ function getActivationUrl() {
 function getPassResetToken() {
   $resetPassword = \Drupal::service('elephant_stack.resetpassword');
   return PASSWORD_RESET_URL . $resetPassword->getUserUid() . "/" . $resetPassword->getPassResetToken();
+}
+
+/**
+ * Altering the default message type, i.e. Email for pending approval.
+ * Since this type of email is not required by elephant I have overridden it
+ * suit elephant app needs.
+ *
+ * Implements hook_form_alter().
+ */
+function elephant_stack_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $mail_config = \Drupal::config('user.mail');
+  if ($form_id == "user_admin_settings") {
+    $form['email_pending_approval'] = array(
+      '#type' => 'details',
+      '#title' => 'Item request email (Template)',
+      '#description' => 'Edit the item request message which will be sent to the item owner when an item is requested.',
+      '#group' => 'email',
+    );
+    $form['email_pending_approval']['user_mail_register_pending_approval_subject'] = array(
+      '#type' => 'textfield',
+      '#title' => 'Subject',
+      '#default_value' => $mail_config->get('register_pending_approval.subject'),
+      '#maxlength' => 180,
+    );
+    $form['email_pending_approval']['user_mail_register_pending_approval_body'] = array(
+      '#type' => 'textarea',
+      '#title' => 'Body',
+      '#default_value' => $mail_config->get('register_pending_approval.body'),
+      '#rows' => 8,
+    );
+  }
 }

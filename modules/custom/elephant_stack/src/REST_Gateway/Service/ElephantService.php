@@ -1,6 +1,8 @@
 <?php
 namespace Drupal\elephant_stack\REST_Gateway\Service;
 
+use Drupal\user\Entity\User;
+
 abstract class ElephantService {
 
   const USER_LOGIN = 'login';
@@ -35,15 +37,34 @@ abstract class ElephantService {
     }
   }
 
+  /**
+   * @param $type
+   * @param $data
+   * @return mixed
+   */
   public function getItemServiceType($type, $data) {
-    switch ($type) {
-      case self::ITEM_UPLOAD: return $this->runItemUpload($data);
-      case self::ITEM_DELETE: return $this->runItemDelete($data);
-      case self::ITEM_DONATE: return $this->runItemDonate($data);
-      case self::ITEM_REQUEST: return $this->runItemRequest($data);
-      case self::ITEM_ALL: return $this->runItemAll($data);
-      case self::ITEM_USER_ONLY: return $this->runItemUserOnly($data);
+    $uid = ElephantService::obtainUid($data);
+    if ($this->authenticateUser($uid)) {
+      switch ($type) {
+        case self::ITEM_UPLOAD: return $this->runItemUpload($data);
+        case self::ITEM_DELETE: return $this->runItemDelete($data, $uid);
+        case self::ITEM_DONATE: return $this->runItemDonate($data, $uid);
+        case self::ITEM_REQUEST: return $this->runItemRequest($data);
+        case self::ITEM_ALL: return $this->runItemAll($data);
+        case self::ITEM_USER_ONLY: return $this->runItemUserOnly($data);
+      }
     }
+
+    return False;
+  }
+
+  public function authenticateUser($uid) {
+    $user = User::load($uid);
+    if ($user) {
+      return True;
+    }
+
+    return False;
   }
 
   /**
@@ -150,20 +171,20 @@ abstract class ElephantService {
    * @param $data
    * @return mixed
    */
-  private function runItemDelete($data) {
+  private function runItemDelete($data, $uid) {
     $nid = json_decode($data->getContent(), TRUE)['nid'];
     $intent = \Drupal::service(self::ITEM_INTENTION);
-    return $intent->deleteItem($nid);
+    return $intent->deleteItem($nid, $uid);
   }
 
   /**
    * @param $data
    * @return mixed
    */
-  private function runItemDonate($data) {
+  private function runItemDonate($data, $uid) {
     $nid = json_decode($data->getContent(), TRUE)['nid'];
     $intent = \Drupal::service(self::ITEM_INTENTION);
-    return $intent->donateItem($nid);
+    return $intent->donateItem($nid, $uid);
   }
 
   /**
@@ -210,6 +231,12 @@ abstract class ElephantService {
    */
   public static function getIntentData() {
     return ElephantService::$inentData;
+  }
+
+  private static function obtainUid($data) {
+    $data = $data->query->get('key');
+    $key = substr($data, -1);
+    return $data[$key];
   }
 
 }

@@ -43,4 +43,9 @@ class UserServiceHandler {
     return $requestService->UpdateUserPassword($uid, $code, $newpass);
   }
 
+  public function authByUserToken($uid, $key) {
+    $activateUser = \Drupal::service(self::ACTIVATE_USER_SERVICE);
+    return $activateUser->AccountVerify($uid, $key);
+  }
+
 }

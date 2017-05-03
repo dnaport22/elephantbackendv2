@@ -29,4 +29,8 @@ class ActivateUser {
     return $this->responseHandler->onAccountActivateError();
   }
 
+  public function AccountVerify($uid, $code) {
+    return $this->activateAccount->verifyUser($uid, $code);
+  }
+
 }
