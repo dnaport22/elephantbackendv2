@@ -8,6 +8,10 @@ class UserIntention extends Item {
   private $itemManager;
   private $responder;
 
+  private $msg;
+  private $nid;
+  private $uid;
+
   public function __construct(ItemManager $itemManager, ElephantResponseHandler $responseHandler) {
     $this->itemManager = $itemManager;
     $this->responder = $responseHandler;
@@ -37,6 +41,7 @@ class UserIntention extends Item {
    * @return bool
    */
   public function requestItem($msg, $nid, $uid) {
+    $this->setRequestMessageData($msg, $nid, $uid);
     if (self::itemInterest($msg, $nid, $uid)) {
       return $this->responder->onItemRequestedResponse();
     }
@@ -67,6 +72,20 @@ class UserIntention extends Item {
     }
 
     return $this->responder->onErrorResponse();
+  }
+
+  private function setRequestMessageData($msg, $nid, $uid) {
+    $this->msg = $msg;
+    $this->nid = $nid;
+    $this->uid = $uid;
+  }
+
+  public function getRequestMessageData() {
+    return array(
+      "msg" => $this->msg,
+      "nid" => $this->nid,
+      "uid" => $this->uid,
+    );
   }
 
 

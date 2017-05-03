@@ -7,13 +7,15 @@ define("PASSWORD_RESET_URL", "http://elephant.xyz/passreset/");
  * Implements hook_mail_alter().
  */
 function elephant_stack_mail_alter(&$message) {
+  // Altering user account verification email.
   if ($message['id'] == 'user_register_no_approval_required') {
     $joined = implode('|||', $message['body']);
     $joined = strtr($joined, array(
       '!elephant_user_verification' => getActivationUrl()));
     $message['body'][] = explode('|||', $joined);
   }
-  
+
+  // Altering user password reset email.
   if ($message['id'] == 'user_password_reset') {
     $joined = implode('|||', $message['body']);
     $joined = strtr($joined, array(
@@ -21,8 +23,20 @@ function elephant_stack_mail_alter(&$message) {
     $message['body'][] = explode('|||', $joined);
   }
 
+  // Altering pending approval mail for user item request email.
   if ($message['id'] == 'user_register_pending_approval') {
-    // TODO: Alter message
+    $message['reply-to'] = getReplyToEmail();
+    // Altering subject
+    $joined_subject = implode('|||', $message['subject']);
+    $joined_subject = strtr($joined_subject, array(
+      '!itemname' => getRequestItemName()));
+    $message['subject'] = explode('|||', $joined_subject);
+    // Altering body
+    $joined_subject = implode('|||', $message['body']);
+    $joined_subject = strtr($joined_subject, array(
+      '!itemname' => getRequestItemName(),
+      '!requestmessage' => getRequestMessage()));
+    $message['body'][] = explode('|||', $joined_subject);
   }
 }
 
@@ -73,4 +87,31 @@ function elephant_stack_form_alter(&$form, \Drupal\Core\Form\FormStateInterface 
       '#rows' => 8,
     );
   }
+}
+
+/**
+ * @return string
+ */
+function getReplyToEmail() {
+  $itemService = \Drupal::service('elephant_stack.userintention');
+  $user = \Drupal\user\Entity\User::load($itemService->getRequestMessageData()['uid']);
+  return $user->getEmail();
+}
+
+/**
+ * @return string
+ */
+function getRequestItemName() {
+  $itemService = \Drupal::service('elephant_stack.userintention');
+  $item = \Drupal\node\Entity\Node::load($itemService->getRequestMessageData['nid']);
+  return $item->title->getString();
+}
+
+/**
+ * @return string
+ */
+function getRequestMessage() {
+  $itemService = \Drupal::service('elephant_stack.userintention');
+  $msg = \Drupal\node\Entity\Node::load($itemService->getRequestMessageData['msg']);
+  return \Drupal\Component\Utility\Html::escape($msg);
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Drupal\elephant_stack\Components\Elephant_Item\Service;
 
+use Drupal\Component\Utility\Html;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 
@@ -82,7 +83,7 @@ abstract class Item {
     $node = Node::create(array(
       'type' => 'item_interest_message',
       'title' => 'Elephant App Item Request - ' . $item->title->getString(),
-      'body' => $msg,
+      'body' => Html::escape($msg),
       'field_item_id' => $nid,
       'field_user_id' => $uid,
     ));
