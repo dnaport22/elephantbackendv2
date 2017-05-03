@@ -41,7 +41,7 @@ function getActivationUrl() {
  */
 function getPassResetToken() {
   $resetPassword = \Drupal::service('elephant_stack.resetpassword');
-  return PASSWORD_RESET_URL . $resetPassword->getUserUid() . "/" . $resetPassword->getPassResetToken();
+  return PASSWORD_RESET_URL . $resetPassword->getUserUid() . "/" . $resetPassword->getPassResetToken()->fetchField();
 }
 
 /**

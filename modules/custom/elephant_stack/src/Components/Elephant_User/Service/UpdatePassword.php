@@ -43,6 +43,6 @@ class UpdatePassword {
   
   private function setResetToken($email) {
     $this->resetPassword->loadUser($email);
-    return $this->resetPassword->storePassResetToken();
+    $this->resetPassword->storePassResetToken();
   }
 }
