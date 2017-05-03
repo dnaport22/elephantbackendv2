@@ -32,11 +32,11 @@ function elephant_stack_mail_alter(&$message) {
       '!itemname' => getRequestItemName()));
     $message['subject'] = explode('|||', $joined_subject);
     // Altering body
-    $joined_subject = implode('|||', $message['body']);
-    $joined_subject = strtr($joined_subject, array(
+    $joined_body = implode('|||', $message['body']);
+    $joined_body = strtr($joined_body, array(
       '!itemname' => getRequestItemName(),
       '!requestmessage' => getRequestMessage()));
-    $message['body'][] = explode('|||', $joined_subject);
+    $message['body'][] = explode('|||', $joined_body);
   }
 }
 
@@ -103,8 +103,8 @@ function getReplyToEmail() {
  */
 function getRequestItemName() {
   $itemService = \Drupal::service('elephant_stack.userintention');
-  $item = \Drupal\node\Entity\Node::load($itemService->getRequestMessageData['nid']);
-  return $item->title->getString();
+  $item = \Drupal\node\Entity\Node::load($itemService->getRequestMessageData()['nid']);
+  return $item->getTitle();
 }
 
 /**
@@ -112,6 +112,6 @@ function getRequestItemName() {
  */
 function getRequestMessage() {
   $itemService = \Drupal::service('elephant_stack.userintention');
-  $msg = \Drupal\node\Entity\Node::load($itemService->getRequestMessageData['msg']);
+  $msg = $itemService->getRequestMessageData()['msg'];
   return \Drupal\Component\Utility\Html::escape($msg);
 }

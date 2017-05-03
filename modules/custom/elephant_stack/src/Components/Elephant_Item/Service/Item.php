@@ -47,8 +47,8 @@ abstract class Item {
    */
   protected function itemDelete($nid, $uid) {
     $node = $this->getNode($nid);
-    $node->setRevisionAuthorId($uid);
-    if ($node->delete()) {
+    if ($node) {
+      $node->delete();
       return True;
     }
 

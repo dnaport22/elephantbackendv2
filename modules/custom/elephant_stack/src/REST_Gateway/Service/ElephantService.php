@@ -53,6 +53,8 @@ abstract class ElephantService {
         case self::ITEM_ALL: return $this->runItemAll($data);
         case self::ITEM_USER_ONLY: return $this->runItemUserOnly($data);
       }
+
+      return True;
     }
 
     return False;

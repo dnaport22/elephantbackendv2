@@ -69,13 +69,11 @@ class ItemManager extends JsonResponse {
   /**
    * Description: Trigger loadList method to set data prepare itemData array
    * @param $items
-   * @return bool|JsonResponse
+   * @return mixed;
    */
   public function itemList($items) {
     if ($this->loadList($items)) {
-      return $this->setData(array(
-        "data" => $this->itemData,
-      ));
+      return $this->itemData;
     }
 
     return False;
